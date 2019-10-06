@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<header>
+<link rel='stylesheet' href='style/upload.css' />
+</header>
+<body>
+
 <?php
 function translit($s) {
   $s = (string) $s; // преобразуем в строковое значение
@@ -27,7 +34,7 @@ $fileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	// echo "! Можно загружать только mp3 файлы. <br>";
 	// $uploadOk = 0;
 // }
-
+echo "<p id='error'>";
 if ($_FILES["songFile"]["size"] > 20*1024*1024) {
     echo "! Размер файла больше 20 МБайт, попробуйте сжать его и повторите загрузку. <br>";
     $uploadOk = 0;
@@ -36,6 +43,7 @@ if ($_POST["psw"] != $password){
 	echo "! Неправильный пароль <br>";
 	$uploadOk = 0;
 }
+echo "</p>";
 if($uploadOk == 0){
 	echo "Извините, мы не стали загружать ваш файл :(";
 }
@@ -48,3 +56,5 @@ else{
 }
 
 ?>
+</body>
+</html>
