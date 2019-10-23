@@ -2,21 +2,74 @@
 <html>
     <head>
     <meta charset="utf-8">
-<link rel="stylesheet" href="leaflet/leaflet.css" />
-        <script src="leaflet/leaflet.js"></script>
         <style>
             body{
                 height:100%;
                 border: none;
                 padding: 0px;
                 margin: 0px;
+				font-family: "Trebuchet MS", Sans;
             }
+			article{
+				display:block;
+				width:60%;
+				margin: 10px auto;
+			}
             #mapid { height: 100%; }
+			footer{
+				text-align:center;
+				width:100%;
+				padding:10px;
+				background:gray;
+			}
+			#openMap {
+				padding:10px;
+			}
+			input{
+				padding: 5px;
+				min-width:100%;
+				display:block;
+			}
+			
         </style>
 </head>
 <body>
-    <div id="mapid"></div>
+<article>
+<h1>
+    AudioMap</h1>
+	<p>Сервис для создания "звучащих" карт.</p>
+	Чтобы создать свою аудиокарту:
+	<ol>
+	<li>Cкопируйте шаблон Google-таблицы: <a href="https://docs.google.com/spreadsheets/d/1n4b6vm0z7t9Fr9fVd4dSMEQx9jsfLM8i0Hu2LKuUaxs/copy" target=_blank>Открыть и копировать шаблон</a>
+	<li>Откройте к этой таблице общий доступ
+	<li>Вставьте адрес вашей таблицы в поле: <input type="text" id="googleKey" placeholder="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" />
+	<li>Скопируйте сгенерированный адрес: 
+	<input type="text" id='resUrl' readonly />
+	
+	</ol>
+	<a id='openMap' href="" target=_blank>Открыть карту в новом окне</a>
+	</article>
+	<article>
+	<a href="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" target=_blank> Пример заполнения таблицы для карты</a>
+	<a href="map.html?googleSheetKey=1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8" target=_blank> Пример карты</a>
+	</article>
+	<footer> &copy; 2019, Петров Илья </footer>
 </body>
-        <script src="js/main.js"> </script>
+        <script> 
+		function getTableId(url) {
+			let id = url.slice(url.indexOf('/d/') + 3, url.indexOf('/edit'));
+			console.log(id);
+			return id
+		}
+		googleKey.oninput = function(e){
+			var id = getTableId(googleKey.value)
+			if(id !== undefined && id != ""){
+				openMap.href = "map.html?googleSheetKey="+id;
+				resUrl.value = openMap.href;
+			}else{
+				resUrl.value = "";
+			}
+		}
+		</script>
     
 </html>
