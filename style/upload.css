@@ -1,0 +1,15 @@
+body{
+	margin:5px;
+	font-size:14pt;
+	font-family: 'Trebuchet MS', Consolas, Sans;
+}
+#error{
+	padding:5px;
+	background:#eee;
+	color:red;
+}
+select,option, input{
+	display:block;
+	padding: 5px;
+	margin: 5px;
+}
