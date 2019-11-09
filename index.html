@@ -2,58 +2,40 @@
 <html>
     <head>
     <meta charset="utf-8">
-        <style>
-            body{
-                height:100%;
-                border: none;
-                padding: 0px;
-                margin: 0px;
-				font-family: "Trebuchet MS", Sans;
-            }
-			article{
-				display:block;
-				width:60%;
-				margin: 10px auto;
-			}
-            #mapid { height: 100%; }
-			footer{
-				text-align:center;
-				width:100%;
-				padding:10px;
-				background:gray;
-			}
-			#openMap {
-				padding:10px;
-			}
-			input{
-				padding: 5px;
-				min-width:100%;
-				display:block;
-			}
-			
-        </style>
+    <link rel='stylesheet' href='style/index.css' />
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <!-- <link href="style/gridder.min.css" rel="stylesheet"> -->
 </head>
 <body>
-<article>
+<div id=hea>
 <h1>
     AudioMap</h1>
-	<p>Сервис для создания "звучащих" карт.</p>
+	<p>Сервис для создания "звучащих" карт</p>
+	</div>
+<article>
 	Чтобы создать свою аудиокарту:
 	<ol>
 	<li>Cкопируйте шаблон Google-таблицы: <a href="https://docs.google.com/spreadsheets/d/1n4b6vm0z7t9Fr9fVd4dSMEQx9jsfLM8i0Hu2LKuUaxs/copy" target=_blank>Открыть и копировать шаблон</a>
 	<li>Откройте к этой таблице общий доступ
-	<li>Вставьте адрес вашей таблицы в поле: <input type="text" id="googleKey" placeholder="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" />
-	<li>Скопируйте сгенерированный адрес: 
-	<input type="text" id='resUrl' readonly />
-	
+	<li>Вставьте адрес вашей таблицы в поле ниже и нажмите "Создать карту": <input type="text" id="googleKey" placeholder="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" />
 	</ol>
-	<a id='openMap' href="" target=_blank>Открыть карту в новом окне</a>
+	<button id=createMap>Создать карту</button>
+	<div id=resPoint>Карта создана! Вот её адрес: 
+	<input type="text" id='resUrl' readonly />
+	Сохраните адрес, чтобы всегда иметь к карте доступ. <a id='openMap' href="" target=_blank>Открыть карту в новом окне</a></div>
+	
 	</article>
-	<article>
-	<a href="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" target=_blank> Пример заполнения таблицы для карты</a>
-	<a href="map.html?googleSheetKey=1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8" target=_blank> Пример карты</a>
-	</article>
-	<footer> &copy; 2019, Петров Илья </footer>
+	<div id=bot>
+	<div class=examples>
+	<h2> Примеры проектов</h2>
+		<div>
+			<!-- <h3>Пример 1.</h3> -->
+			<a href="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" target=_blank> Пример заполнения таблицы для карты</a>
+			<a href="map.html?googleSheetKey=1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8" target=_blank> Пример карты</a>
+		</div>
+	</div>
+	</div>
+	<footer class=bottom> &copy; 2019, Петров Илья <br> Фонд "Электронная энциклопедия истории и культуры русских сёл и деревень" </footer>
 </body>
         <script> 
 		function getTableId(url) {
@@ -61,14 +43,21 @@
 			console.log(id);
 			return id
 		}
-		googleKey.oninput = function(e){
+		resPoint.style.display = 'none';
+		function showLink(e){
 			var id = getTableId(googleKey.value)
 			if(id !== undefined && id != ""){
 				openMap.href = "map.html?googleSheetKey="+id;
+				resPoint.style.display = 'block';
 				resUrl.value = openMap.href;
 			}else{
+				resPoint.style.display = 'none';
 				resUrl.value = "";
 			}
+		}
+		createMap.onclick = showLink;
+		googleKey.oninput = function(e){
+			resPoint.style.display = 'none';
 		}
 		</script>
     
