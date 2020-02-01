@@ -18,9 +18,7 @@ div.descr div{
 }
 
 div.descr .title {
-	color: red;
+	
 	text-align: right;
-}
-div.descr .title:after {
-	content: ":";
+	background: #eee;
 }
