@@ -1,0 +1,26 @@
+body{
+	height:100%;
+	border: none;
+	padding: 0px;
+	margin: 0px;
+}
+#mapid { height: 100%; }
+div.etc{
+	display:table;
+	
+}
+div.descr{
+	display: table-row;
+}
+div.descr div{
+	display: table-cell;
+	padding: 5px 5px;
+}
+
+div.descr .title {
+	color: red;
+	text-align: right;
+}
+div.descr .title:after {
+	content: ":";
+}

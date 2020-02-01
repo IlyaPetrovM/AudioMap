@@ -27,18 +27,33 @@ console.log(googleSheetKey);
 if(googleSheetKey === undefined){
 	alert("Невозможно получить доступ к google-таблице!");
 }
+function createItem(title, val){
+	let s = '<div class=descr><div class=title>'+title+'</div><div class=val>' + val+'</div></div>';
+	return s;
+}
 
-function AudioPoint(lat,lng, title, url){
+function AudioPoint(lat,lng, title, url,etc){
     this.coords = L.latLng(lat,lng);
-	
     this.title = title;
-	let _path = url;
-		console.log('fileId:',url);
-	if(url.includes('drive.google.com/open?id=')){// Пытаемся переделать ссылку на гугл диск
-		let fileId = getTableId(url);
-		_path = 'https://drive.google.com/uc?export=download&id='+fileId;
+	if(etc) {
+		this.title += '<div class=etc>'; 
+		if(etc['ARTIST']!==undefined && etc['ARTIST']!=='') this.title = this.title + createItem('Исполнитель',etc['ARTIST']);
+		if(etc['OPERATOR']!==undefined && etc['OPERATOR']!=='') this.title = this.title + createItem('Оператор',etc['OPERATOR']);
+		if(etc['ARCHIVE']!==undefined && etc['ARCHIVE']!=='') this.title = this.title + createItem('Владелец архива',etc['ARCHIVE']);
+		if(etc['COUNTRY']!==undefined && etc['COUNTRY']!=='') this.title = this.title + createItem('Страна',etc['COUNTRY']);
+		if(etc['REGION']!==undefined && etc['REGION']!=='') this.title = this.title + createItem('Район',etc['REGION']);
+		if(etc['PLACE']!==undefined && etc['PLACE']!=='') this.title = this.title + createItem('Населённый пункт',etc['PLACE']);
+		this.title += '</div>'; 
 	}
-	this.audioPath = new Audio(_path);
+	if(url!==undefined){
+		let _path = url;
+		console.log('fileId:',url);
+		if(url.includes('drive.google.com/open?id=')){// Пытаемся переделать ссылку на гугл диск
+			let fileId = getTableId(url);
+			_path = 'https://drive.google.com/uc?export=download&id='+fileId;
+		}
+		this.audioPath = new Audio(_path);
+	}
 }
 AudioPoint.prototype.stop = function(){
     this.audioPath.pause();
@@ -85,8 +100,15 @@ function drawPoints(data){
 	for(let i=0;i<data[0].length;i++){
 		if (data[0][i].includes('COORDS')) COORDS = i;
 		if (data[0][i].includes('TITLE')) TITLE = i;
-		if (data[0][i].includes('URL')) LTL = i;
+		if (data[0][i].includes('URL')) URL = i;
+		if (data[0][i].includes('ARTIST')) var ARTIST = i;
+		if (data[0][i].includes('OPERATOR')) var OPERATOR = i;
+		if (data[0][i].includes('ARCHIVE')) var ARCHIVE = i;
+		if (data[0][i].includes('COUNTRY')) var COUNTRY = i;
+		if (data[0][i].includes('REGION')) var REGION = i;
+		if (data[0][i].includes('PLACE')) var PLACE = i;
 	}
+	
 	if(COORDS === undefined){
 		console.warn('Не найдены стандартные заголовки таблицы. Интерпертируем её как старую версию');
 		for(let i=1; i<data.length; i++){
@@ -97,8 +119,14 @@ function drawPoints(data){
 	}else{
 		for(let i=2; i<data.length; i++){
 			if(data[i][COORDS] == '') continue;
+			let etc = {'ARTIST':data[i][ARTIST],
+			'OPERATOR':data[i][OPERATOR],
+			'ARCHIVE':data[i][ARCHIVE],
+			'COUNTRY':data[i][COUNTRY],
+			'REGION':data[i][REGION],
+			'PLACE':data[i][PLACE]};
 			let latlang = data[i][COORDS].split(',');
-			let ap = new AudioPoint(parseFloat(latlang[0]), parseFloat(latlang[1]), data[i][TITLE], data[i][URL]);
+			let ap = new AudioPoint(parseFloat(latlang[0]), parseFloat(latlang[1]), data[i][TITLE], data[i][URL],etc);
 			points.push(ap);
 		}
 	}
@@ -115,7 +143,7 @@ function drawPoints(data){
 }
 function loadData() {
 	
-        let url = "https://sheets.googleapis.com/v4/spreadsheets/" + googleSheetKey + "/values/A:D?key="+G_API;
+        let url = "https://sheets.googleapis.com/v4/spreadsheets/" + googleSheetKey + "/values/A:Z?key="+G_API;
         xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
           if (xmlhttp.readyState == 4) {
@@ -144,7 +172,7 @@ function getNearPoint(p, pts){
     return pts[minIdx];
 }
 
-var near = new AudioPoint(0,0,'','');
+var near = new AudioPoint(0,0,'','hello');
 
 function onMoveEnd(e){
     if(!initDone) return;

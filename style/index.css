@@ -1,0 +1,119 @@
+button{
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.08);
+color: #fff;
+display:block;
+/* width:100px; */
+text-align: center;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 14px;
+padding: 8px 16px;
+margin: 20px auto;
+text-decoration: none;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+-webkit-transition: background-color 0.1s linear;
+-moz-transition: background-color 0.1s linear;
+-o-transition: background-color 0.1s linear;
+transition: background-color 0.1s linear;        
+}
+button {
+background-color: rgb( 43, 153, 91 );
+border: 1px solid rgb( 33, 126, 74 );
+}
+        
+button:hover {
+background-color: rgb( 75, 183, 141 );
+}
+
+h1{
+	font-size: 50px;
+    margin: 0 auto;
+}
+#hea{
+	text-align: center;
+	margin: 40px auto;
+}
+#hea p {
+	font-size:13px;
+	margin:0;
+}
+ body{
+	border: none;
+	padding: 0px;
+	margin: 0px;
+	font-family: BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+}
+article{
+	display:block;
+	width:60%;
+	margin: 10px auto;
+}
+#mapid { height: 100%; }
+footer{
+	text-align:center;
+	width:98%;
+	padding:10px;
+	background:gray;
+}
+#openMap {
+	padding:10px;
+}
+input{
+	padding: 5px;
+    min-width: 100%;
+    display: block;
+    margin: 10px;
+    font-size: 12px;
+}
+}
+li{
+	padding-top: 10px;
+}
+a{
+	    color: #644020;
+}
+#bot{
+	color:black;
+	background:white;
+}
+.examples{
+	max-width:800px;
+	text-align:center;
+	margin:0 auto;
+	margin-top:50px;
+}
+.examples h2{
+	margin:0 auto;
+}
+.examples div{
+	border: #cccccc solid;
+	display:inline-block;
+	/* display: table-cell;	 */
+    vertical-align: middle;
+	padding:15px;
+	margin:10px;
+	width:180px;
+	min-height:180px;
+	/* background:gray; */
+	text-align:left;
+}
+#resUrl {
+	background:#4f4;
+}
+.examples h3{
+	
+}
+.examples div a{
+	background: white;
+	padding:10px;
+	display:inline-block;
+	margin: 5px;
+	text-align:center;
+	border-radius:10px;
+	text-decoration:none;
+}
+/* .examples div a:hover{ */
+	/* background:#cfc; */
+/* } */
