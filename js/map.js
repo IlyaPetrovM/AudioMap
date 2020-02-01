@@ -109,7 +109,7 @@ function drawPoints(data){
 		console.warn('Не найдены стандартные заголовки таблицы. Интерпертируем её как старую версию');
 		for(let i=1; i<data.length; i++){
 			if(data[i][0] == '') continue;
-			let ap = new AudioPoint(data[i][0], data[i][1], data[i][2],data[i][3]);
+		let ap = new AudioPoint(data[i][0], data[i][1], data[i][3], { "":data[i][2]});
 			points.push(ap);
 		}
 	}else{
