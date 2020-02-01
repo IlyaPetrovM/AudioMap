@@ -15,9 +15,9 @@
 <article>
 	Чтобы создать свою аудиокарту:
 	<ol>
-	<li>Cкопируйте шаблон Google-таблицы: <a href="https://docs.google.com/spreadsheets/d/1n4b6vm0z7t9Fr9fVd4dSMEQx9jsfLM8i0Hu2LKuUaxs/copy" target=_blank>Открыть и копировать шаблон</a>
+	<li>Cкопируйте шаблон Google-таблицы: <a href="https://docs.google.com/spreadsheets/d/1JyzUkgaZRNY0wql9fI8wrydakOwphk06Ah7FaNjR5Jo/copy" target=_blank>Открыть и копировать шаблон</a>
 	<li>Откройте к этой таблице общий доступ
-	<li>Вставьте адрес вашей таблицы в поле ниже и нажмите "Создать карту": <input type="text" id="googleKey" placeholder="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" />
+	<li>Вставьте адрес вашей таблицы в поле ниже и нажмите "Создать карту": <input type="text" id="googleKey" placeholder="Например, https://docs.google.com/spreadsheets/d/1JyzUkgaZRNY0wql9fI8wrydakOwphk06Ah7FaNjR5Jo/edit#gid=0" />
 	</ol>
 	<button id=createMap>Создать карту</button>
 	<div id=resPoint>Карта создана! Вот её адрес: 
@@ -29,36 +29,22 @@
 	<div class=examples>
 	<h2> Примеры проектов</h2>
 		<div>
-			<!-- <h3>Пример 1.</h3> -->
-			<a href="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" target=_blank> Пример заполнения таблицы для карты</a>
-			<a href="map.html?googleSheetKey=1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8" target=_blank> Пример карты</a>
+            <a href="map.html?googleSheetKey=1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8" target=_blank>Пример карты</a><hr>
+			<a href="https://docs.google.com/spreadsheets/d/1udGaP0-aCeCbo02Z3ChkUPIDKjT1TA4Y723U83uq8R8/edit#gid=0" target=_blank>Исходная таблица</a>
+		</div>
+        <div>
+            <a href="http://derevni-sela.ru/AudioMap/map.html?googleSheetKey=1l7pa5ilpxBtndJLKwOk3bGS0K-ZfCGW_j9pYtI_uCso" target=_blank> Карта "Как повадилась Параня"</a> <hr>
+			<a href="https://docs.google.com/spreadsheets/d/1l7pa5ilpxBtndJLKwOk3bGS0K-ZfCGW_j9pYtI_uCso/edit?usp=sharing" target=_blank>Исходная таблица</a>
+		</div>
+         <div>
+            <a href="http://derevni-sela.ru/AudioMap/map.html?googleSheetKey=15fDPBfaHsQZZkrupooSFKH32vU8IUINnTolDcv9QW7s" target=_blank>"Мы сидели за убранным за столом"</a><hr>
+			<a href="https://docs.google.com/spreadsheets/d/15fDPBfaHsQZZkrupooSFKH32vU8IUINnTolDcv9QW7s/edit?usp=sharing" target=_blank>Исходная таблица</a>
 		</div>
 	</div>
 	</div>
 	<footer class=bottom> &copy; 2019, Петров Илья <br> Фонд "Электронная энциклопедия истории и культуры русских сёл и деревень" </footer>
 </body>
-        <script> 
-		function getTableId(url) {
-			let id = url.slice(url.indexOf('/d/') + 3, url.indexOf('/edit'));
-			console.log(id);
-			return id
-		}
-		resPoint.style.display = 'none';
-		function showLink(e){
-			var id = getTableId(googleKey.value)
-			if(id !== undefined && id != ""){
-				openMap.href = "map.html?googleSheetKey="+id;
-				resPoint.style.display = 'block';
-				resUrl.value = openMap.href;
-			}else{
-				resPoint.style.display = 'none';
-				resUrl.value = "";
-			}
-		}
-		createMap.onclick = showLink;
-		googleKey.oninput = function(e){
-			resPoint.style.display = 'none';
-		}
-		</script>
+		<script src="js/urlAnalyser.js"></script>
+        <script src="js/index.js"> </script>
     
 </html>
