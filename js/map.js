@@ -55,9 +55,22 @@ function AudioPoint(lat,lng,url,etc){
 		}
 		this.audioPath = new Audio(_path);
 	}
+	this.inctmr = undefined;
+	this.dectmr= undefined;
 }
 AudioPoint.prototype.stop = function(){
-    this.audioPath.pause();
+	// clearInterval(this.inctmr);
+	// function decrVol(p){
+		// if(p.audioPath.volume < 0.1 ) {
+			// clearInterval(p.dectmr);
+			this.audioPath.pause();
+			// console.log('stop Interval');
+		// }else{
+			// // console.log(audio.volume);
+			// p.audioPath.volume -= 0.01;
+		// }
+	// };
+	// this.dectmr = setInterval(decrVol, 100, this);
 }
 AudioPoint.prototype.play = function(){
     var pop = L.popup()
@@ -66,9 +79,20 @@ AudioPoint.prototype.play = function(){
 		.openOn(map);
     var _this = this;
     map.on('popupclose', function() {_this.stop();});
-    // if(this.audioPath.length>0){
-        this.audioPath.play();
-    // }
+	// this.audioPath.volume = 0;
+    this.audioPath.play();
+	
+	// clearInterval(this.dectmr);
+	// function incVol(p){
+		// if(p.audioPath.volume > 0.90){
+			// p.audioPath.volume = 1;
+			// clearInterval(p.inctmr);
+			// console.log('audio started');
+		// }else{
+			// p.audioPath.volume += 0.01;
+		// }
+	// };
+	// this.inctmr = setInterval(incVol, 100, this);
 }
 
 function isNum(x){
@@ -135,8 +159,11 @@ function drawPoints(data){
     ]);
 	
 	for(var i=0; i<points.length; i++){
-		// L.marker(points[i].coords).addTo(map);
-		markers.addLayer(L.marker(points[i].coords));
+		let m = L.marker(points[i].coords, {alt: points[i].title});
+		m.on('click', function(){
+			this.play();
+		}.bind(points[i]));
+		markers.addLayer(m);
 	}
 	initDone = true;
 }
@@ -172,13 +199,29 @@ function getNearPoint(p, pts){
 }
 
 var near = new AudioPoint(0,0,'','hello');
-
-function onMoveEnd(e){
-    if(!initDone) return;
+function playAnotherPoint(){
+	if(!initDone) return;
     var center = map.getCenter();
     near.stop();
     near = getNearPoint(center,points);
     near.play(); 
 }
 loadData();
-map.on('moveend', onMoveEnd);
+var wasZoom = false;
+var movState = 'nope';
+map.on('movestart', function(){
+	movState = 'start';
+});
+map.on('moveend', function(){
+	if(movState === 'start') movState = 'end';
+});
+map.on('mouseup', function(){
+	if(movState === 'end' && !wasZoom) {
+		playAnotherPoint();
+	}
+	wasZoom = false;
+	movState = 'nope';
+});
+map.on('zoom', function(){
+	wasZoom = true;
+});
