@@ -19,6 +19,9 @@ L.tileLayer(OSM_URL, {
 	maxZoom: 18, 
 	attribution: OSM_ATTR 
 }).addTo(map);
+var markers = L.markerClusterGroup();
+// markers.addLayer();
+map.addLayer(markers);
 
 
 
@@ -132,7 +135,8 @@ function drawPoints(data){
     ]);
 	
 	for(var i=0; i<points.length; i++){
-		L.marker(points[i].coords).addTo(map);
+		// L.marker(points[i].coords).addTo(map);
+		markers.addLayer(L.marker(points[i].coords));
 	}
 	initDone = true;
 }
